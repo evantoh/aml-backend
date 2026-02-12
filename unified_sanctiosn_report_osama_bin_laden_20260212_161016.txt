@@ -1,0 +1,121 @@
+================================================================================
+UNIFIED SANCTIONS SEARCH REPORT 
+================================================================================
+Search Query: osama bin laden
+Client/Loan ID: None
+Search Date: 2026-02-12 16:10:16
+Total Results: 5
+Sources Searched: OFAC, EU, UN, UK
+================================================================================
+
+⚠️  SANCTIONS MATCHES FOUND ⚠️
+==================================================
+COMPLIANCE REVIEW REQUIRED
+
+OFAC SANCTIONS DATABASE RESULTS
+==================================================
+Results found: 0
+No matches identified in this database.
+
+
+EU SANCTIONS DATABASE RESULTS
+==================================================
+Results found: 5
+
+RESULT #1
+----------------------------------------
+Source: EU
+Name: Rede de Osama bin Laden
+Type: Individual/Entity
+Programs: TAQA
+Additional Info: 
+Match Score: N/A
+First Name: 
+Last Name: 
+Title: 
+Function: 
+
+========================================
+
+RESULT #2
+----------------------------------------
+Source: EU
+Name: Organização de Osama bin Laden
+Type: Individual/Entity
+Programs: TAQA
+Additional Info: 
+Match Score: N/A
+First Name: 
+Last Name: 
+Title: 
+Function: 
+
+========================================
+
+RESULT #3
+----------------------------------------
+Source: EU
+Name: Osama bin Laden-Netzwerk
+Type: Individual/Entity
+Programs: TAQA
+Additional Info: 
+Match Score: N/A
+First Name: 
+Last Name: 
+Title: 
+Function: 
+
+========================================
+
+RESULT #4
+----------------------------------------
+Source: EU
+Name: Osama bin Laden-Organisation
+Type: Individual/Entity
+Programs: TAQA
+Additional Info: 
+Match Score: N/A
+First Name: 
+Last Name: 
+Title: 
+Function: 
+
+========================================
+
+RESULT #5
+----------------------------------------
+Source: EU
+Name: Usama  Bin  Muhammed  Bin  Awad,  Osama  Bin  Laden
+Type: Individual/Entity
+Programs: TAQA
+Additional Info: (Other    information:    Confirmed  to  have  died  in  Pakistan  in  May  2011.  Date  of  designation  referred  to  in  Article  2a(4)(b):  25.1.2001.)
+Match Score: N/A
+First Name: 
+Last Name: 
+Title: 
+Function: 
+
+========================================
+
+
+UN SANCTIONS DATABASE RESULTS
+==================================================
+Results found: 0
+No matches identified in this database.
+
+
+UK SANCTIONS DATABASE RESULTS
+==================================================
+Results found: 0
+No matches identified in this database.
+
+
+SEARCH SUMMARY
+==================================================
+OFAC: NO MATCHES
+EU: 5 matches
+UN: NO MATCHES
+UK: NO MATCHES
+
+RECOMMENDATION: COMPLIANCE REVIEW REQUIRED
+This client has potential sanctions matches and requires manual review.

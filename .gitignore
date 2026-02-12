@@ -1,0 +1,60 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# ===============================
+# Django
+# ===============================
+*.log
+db.sqlite3
+*.sqlite3
+media/
+staticfiles/
+
+# ===============================
+# Environment & Secrets
+# ===============================
+secretKeys.ini
+.env
+.env.*
+
+# ===============================
+# OS Files
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# IDE
+# ===============================
+.vscode/
+.idea/
+
+# ===============================
+# Generated Reports (IMPORTANT)
+# ===============================
+unified_sanctions_report_*.txt
+
+# ===============================
+# Coverage / Testing
+# ===============================
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ===============================
+# CSV / Local Data Files (optional)
+# ===============================
+eu_sanctions.csv
+
+.venv/
+secretKeys.ini
+unified_sanctions_report_*.txt
