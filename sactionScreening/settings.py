@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "sanctions",
 ]
 
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -125,3 +126,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 CORS_ALLOW_ALL_ORIGINS = True
+
+STATIC_URL = '/static/'
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = BASE_DIR / "reports"
+MEDIA_URL = "/reports/"
+
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "sanctions/static",
+]
+

@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AML Compliance</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon">🛡</div>
+    <div>
+      <h2>AML Compliance</h2>
+      <small>Client Screening Portal</small>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="card">
+      <h4>Total Clients</h4>
+      <h2>10</h2>
+      <span class="positive">+12% from last month</span>
+    </div>
+
+    <div class="card danger">
+      <h4>High Risk</h4>
+      <h2>2</h2>
+    </div>
+
+    <div class="card warning">
+      <h4>Pending Reviews</h4>
+      <h2>2</h2>
+    </div>
+
+    <div class="card success">
+      <h4>Screened This Week</h4>
+      <h2>0</h2>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="glass-panel">
+    <div class="search-section">
+      <h3>Client Search</h3>
+      <p>Search by client name</p>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Enter client name...">
+        <button class="primary-btn" onclick="runSearch()">Search</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-section">
+    <div class="results-header">
+      <h3>Search Results</h3>
+
+      <button class="primary-btn" id="downloadBtn" onclick="downloadReport()" disabled>
+          Download Report
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Client Name</th>
+            <th>Source</th>
+            <th>Country</th>
+            <th>Risk Level</th>
+            <th>Status</th>
+            <th>Last Screened</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody">
+          <tr>
+            <td colspan="6" style="text-align:center;">No matches found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+<script>
+let currentReportFilename = null;
+
+async function runSearch() {
+  const query = document.getElementById("searchInput").value.trim();
+  if (!query) {
+    alert("Please enter a name.");
+    return;
+  }
+
+  const response = await fetch("/sanctions/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCookie("csrftoken")
+    },
+    body: JSON.stringify({
+      query: query,
+      include_report: true,
+      min_score_threshold: 90,
+      owner_type: "CLIENT"
+    })
+  });
+
+  const data = await response.json();
+
+  const tbody = document.getElementById("resultsBody");
+  tbody.innerHTML = "";
+
+  if (data.results && data.results.length > 0) {
+    data.results.forEach(result => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${result.name}</td>
+          <td>${result.source}</td>
+          <td>—</td>
+          <td><span class="badge gray">UNKNOWN</span></td>
+          <td><span class="badge green">ACTIVE</span></td>
+          <td>${new Date().toLocaleDateString()}</td>
+        </tr>
+      `;
+    });
+  } else {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center;">No matches found</td>
+      </tr>
+    `;
+  }
+
+  if (data.report_created) {
+    currentReportFilename = data.report_filename;
+    document.getElementById("downloadBtn").disabled = false;
+  }
+}
+
+function downloadReport() {
+  if (!currentReportFilename) return;
+
+  window.location.href =
+    "/sanctions/download?filename=" + currentReportFilename;
+}
+
+// CSRF helper for Django
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+</script>
+
+</body>
+</html>

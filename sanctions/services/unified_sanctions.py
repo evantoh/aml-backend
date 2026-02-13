@@ -8,6 +8,8 @@ from pathlib import Path
 from urllib.parse import urlencode
 import pickle
 from io import BytesIO
+from django.conf import settings
+
 
 
 # import googleapiclient.errors
@@ -750,10 +752,11 @@ class UnifiedSanctionsBot:
         """Generate a unified report with results from all sources - for both matches and no matches"""
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        report_filename = f"unified_sanctiosn_report_{query.replace(' ', '_')}_{timestamp}.txt"
+        filename = f"unified_sanctions_report_{query.replace(' ', '_')}_{timestamp}.txt"
+        filepath = os.path.join(settings.MEDIA_ROOT, filename)
 
         try:
-            with open(report_filename, "w", encoding="utf-8") as report_file:
+            with open(filepath, "w", encoding="utf-8") as report_file:
                 # Header
                 report_file.write("=" * 80 + "\n")
                 report_file.write("UNIFIED SANCTIONS SEARCH REPORT \n")
@@ -818,8 +821,8 @@ class UnifiedSanctionsBot:
                     # No matches: keep minimal header only (as in your original code it did pass)
                     pass
 
-            print(f"📄 Unified report generated: {report_filename}")
-            return report_filename
+            print(f"📄 Unified report generated: {filepath}")
+            return filepath
 
         except Exception as e:
             print(f"❌ Error creating unified report: {e}")

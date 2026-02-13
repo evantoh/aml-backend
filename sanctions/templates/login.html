@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - AML Compliance</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<div class="login-container">
+  <div class="login-card">
+    <h2>AML Compliance Login</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit" class="primary-btn">Login</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

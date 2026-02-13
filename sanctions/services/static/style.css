@@ -1,0 +1,43 @@
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial;
+}
+
+.topbar {
+  background: #111827;
+  padding: 20px;
+}
+
+.container {
+  width: 800px;
+  margin: 40px auto;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 300px;
+}
+
+button {
+  padding: 10px 15px;
+  background: #14b8a6;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #334155;
+}
