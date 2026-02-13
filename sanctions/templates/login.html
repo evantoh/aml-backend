@@ -1,23 +1,45 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login - AML Compliance</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <title>AML Compliance | Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
-<body>
+<body class="login-page">
 
-<div class="login-container">
-  <div class="login-card">
-    <h2>AML Compliance Login</h2>
+<div class="login-wrapper">
+    <div class="login-card">
 
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
+        <div class="login-header">
+            <div class="logo-circle">🛡</div>
+            <h2>AML Compliance</h2>
+            <p>Secure Client Screening Portal</p>
+        </div>
 
-      <button type="submit" class="primary-btn">Login</button>
-    </form>
-  </div>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="primary-btn full-width">
+                Login
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <small>© 2026 AML Compliance System</small>
+        </div>
+
+    </div>
 </div>
 
 </body>

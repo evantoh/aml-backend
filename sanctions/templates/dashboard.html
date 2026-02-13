@@ -10,18 +10,26 @@
 <body>
 
   <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="logo-icon">🛡</div>
-        <div>
-          <h2>AML Compliance</h2> <small>Client Screening Portal</small>
-        </div>
-      </div>
-      <div class="topbar-actions"> <span class="user-pill">Hi, {{ request.user.username }}</span>
-        <form method="post" action="{% url 'logout' %}"> {% csrf_token %} <button type="submit"
-            class="btn btn-danger">Logout</button> </form>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">
+      <div class="logo-icon">🛡</div>
+      <div>
+        <h2>AML Compliance</h2>
+        <small>Client Screening Portal</small>
       </div>
     </div>
+
+    <div class="nav-right">
+      <div class="user-pill">Hi, {{ user.username }}</div>
+  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" class="logout-btn">
+          Logout
+      </button>
+  </form>    </div>
+  </div>
+</div>
   </header>
 
   <main class="container">
