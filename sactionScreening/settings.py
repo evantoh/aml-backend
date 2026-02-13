@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-+g(=ag(5t=^bd^kzu!bm8d6s=9!fhg2a9ev1=@!r)vu@rlywj0
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["38.242.154.74"]  # add domain later if you have one
+ALLOWED_HOSTS = ["aml.tribaselabs.com"]  # add domain later if you have one
 
 
 # Application definition
