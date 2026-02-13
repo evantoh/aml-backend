@@ -135,7 +135,11 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR / "reports"
 MEDIA_URL = "/reports/"
 
+from django.urls import reverse_lazy
 
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "/"          # or reverse_lazy("dashboard")
+LOGOUT_REDIRECT_URL = "/login/"  
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
