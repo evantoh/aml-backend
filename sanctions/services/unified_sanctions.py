@@ -749,20 +749,27 @@ class UnifiedSanctionsBot:
     # ---------------------------
     def create_unified_report(self, all_results, query, client_id, owner_type):
         print("CLIENTID", client_id)
-        """Generate a unified report with results from all sources - for both matches and no matches"""
+        """Generate a unified report with results from all sources"""
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"unified_sanctions_report_{query.replace(' ', '_')}_{timestamp}.txt"
-        filepath = os.path.join(settings.MEDIA_ROOT, filename)
+        safe_query = query.replace(" ", "_")
+        filename = f"unified_sanctions_report_{safe_query}_{timestamp}.txt"
+
+        # Ensure MEDIA_ROOT exists
+        reports_dir = Path(settings.MEDIA_ROOT)
+        reports_dir.mkdir(parents=True, exist_ok=True)
+
+        filepath = reports_dir / filename
 
         try:
             with open(filepath, "w", encoding="utf-8") as report_file:
                 # Header
                 report_file.write("=" * 80 + "\n")
-                report_file.write("UNIFIED SANCTIONS SEARCH REPORT \n")
+                report_file.write("UNIFIED SANCTIONS SEARCH REPORT\n")
                 report_file.write("=" * 80 + "\n")
                 report_file.write(f"Search Query: {query}\n")
                 report_file.write(f"Client/Loan ID: {client_id}\n")
+                report_file.write(f"Owner Type: {owner_type}\n")
                 report_file.write(f"Search Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
                 report_file.write(f"Total Results: {len(all_results)}\n")
                 report_file.write(f"Sources Searched: OFAC, EU, UN, UK\n")
@@ -770,12 +777,11 @@ class UnifiedSanctionsBot:
 
                 sources = {'OFAC': [], 'EU': [], 'UN': [], 'UK': []}
                 for result in all_results:
-                    source = result['source']
+                    source = result.get('source')
                     if source in sources:
                         sources[source].append(result)
 
                 if len(all_results) > 0:
-                    # Matches found
                     report_file.write("⚠️  SANCTIONS MATCHES FOUND ⚠️\n")
                     report_file.write("=" * 50 + "\n")
                     report_file.write("COMPLIANCE REVIEW REQUIRED\n\n")
@@ -783,32 +789,35 @@ class UnifiedSanctionsBot:
                     for source, results in sources.items():
                         report_file.write(f"{source} SANCTIONS DATABASE RESULTS\n")
                         report_file.write("=" * 50 + "\n")
+
                         if len(results) > 0:
                             report_file.write(f"Results found: {len(results)}\n\n")
+
                             for i, result in enumerate(results, 1):
                                 report_file.write(f"RESULT #{i}\n")
                                 report_file.write("-" * 40 + "\n")
-                                report_file.write(f"Source: {result['source']}\n")
-                                report_file.write(f"Name: {result['name']}\n")
-                                report_file.write(f"Type: {result['type']}\n")
-                                report_file.write(f"Programs: {result['programs']}\n")
-                                report_file.write(f"Additional Info: {result['addresses']}\n")
-                                report_file.write(f"Match Score: {result['score']}\n")
+                                report_file.write(f"Source: {result.get('source')}\n")
+                                report_file.write(f"Name: {result.get('name')}\n")
+                                report_file.write(f"Type: {result.get('type')}\n")
+                                report_file.write(f"Programs: {result.get('programs')}\n")
+                                report_file.write(f"Additional Info: {result.get('addresses')}\n")
+                                report_file.write(f"Match Score: {result.get('score')}\n")
+
                                 if source == 'EU' and 'raw_data' in result:
                                     raw = result['raw_data']
                                     report_file.write(f"First Name: {raw.get('firstname', 'N/A')}\n")
                                     report_file.write(f"Last Name: {raw.get('lastname', 'N/A')}\n")
                                     report_file.write(f"Title: {raw.get('title', 'N/A')}\n")
                                     report_file.write(f"Function: {raw.get('function', 'N/A')}\n")
+
                                 elif source == 'UN' and 'raw_data' in result:
                                     report_file.write(f"Match Text: {result['raw_data'].get('match_text', 'N/A')}\n")
+
                                 report_file.write("\n" + "=" * 40 + "\n\n")
                         else:
                             report_file.write("Results found: 0\n")
                             report_file.write("No matches identified in this database.\n\n")
-                        report_file.write("\n")
 
-                    # Summary
                     report_file.write("SEARCH SUMMARY\n")
                     report_file.write("=" * 50 + "\n")
                     for source in ['OFAC', 'EU', 'UN', 'UK']:
@@ -817,16 +826,17 @@ class UnifiedSanctionsBot:
 
                     report_file.write("\nRECOMMENDATION: COMPLIANCE REVIEW REQUIRED\n")
                     report_file.write("This client has potential sanctions matches and requires manual review.\n")
+
                 else:
-                    # No matches: keep minimal header only (as in your original code it did pass)
-                    pass
+                    report_file.write("No sanctions matches found.\n")
 
             print(f"📄 Unified report generated: {filepath}")
-            return filepath
+            return str(filepath)
 
         except Exception as e:
             print(f"❌ Error creating unified report: {e}")
             return None
+
 
 
     def send_email_notification(self, query, client_id, report_filename):
